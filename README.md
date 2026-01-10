@@ -1,5 +1,5 @@
 # STUNTING-KRENOVA-2026
-Repository ini berisi segala harta karun terkait projek lomba KRENOVA SRAGEN 2026 (Khusna, Mayang, Arin) <br>
+Repository ini berisi backup dari sistem utama SI Tumbuh untuk KRENOVA 2026 (mayang, khusna, via) <br>
 
 ### URL DEPLOY
-TumbuhKu = [https://tumbuhku-site.streamlit.app](https://si-tumbuh-backup.streamlit.app/)/   (sementara)
+TumbuhKu = [BACKUP SISTEM](https://si-tumbuh-backup.streamlit.app/)/   (sementara)
