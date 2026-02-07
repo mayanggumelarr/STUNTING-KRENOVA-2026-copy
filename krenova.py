@@ -45,6 +45,7 @@ def get_ai_analysis(data_anak, status_z):
     except Exception as e:
         return f"Oops. Gagal mendapatkan saran Gemini: {str(e)}"
 
+
 # ========= DATABASE SETUP
 def init_database():
     conn = sqlite3.connect('krenova_data.db')
@@ -691,36 +692,69 @@ if page == " Database (Admin)" and st.session_state.view_mode == 'admin' and st.
         
         with col2:
             # Bar Chart - Perbandingan
-            total_anak = len(df)
-            berisiko = len(df[df['status_stunting'] != 'Tidak Berisiko Stunting'])
-            tidak_berisiko = total_anak - berisiko
+        #     total_anak = len(df)
+        #     berisiko = len(df[df['status_stunting'] != 'Tidak Berisiko Stunting'])
+        #     tidak_berisiko = total_anak - berisiko
             
-            persentase_berisiko = (berisiko / total_anak * 100) if total_anak > 0 else 0
-            persentase_tidak_berisiko = (tidak_berisiko / total_anak * 100) if total_anak > 0 else 0
+        #     persentase_berisiko = (berisiko / total_anak * 100) if total_anak > 0 else 0
+        #     persentase_tidak_berisiko = (tidak_berisiko / total_anak * 100) if total_anak > 0 else 0
             
-            fig_bar = go.Figure(data=[
-                go.Bar(
-                    x=['Tidak Berisiko', 'Berisiko Stunting'],
-                    y=[tidak_berisiko, berisiko],
-                    text=[f'{tidak_berisiko}<br>({persentase_tidak_berisiko:.1f}%)', 
-                          f'{berisiko}<br>({persentase_berisiko:.1f}%)'],
-                    textposition='auto',
-                    marker=dict(color=['#8AA624', '#FEA405'])
+        #     fig_bar = go.Figure(data=[
+        #         go.Bar(
+        #             x=['Tidak Berisiko', 'Berisiko Stunting'],
+        #             y=[tidak_berisiko, berisiko],
+        #             text=[f'{tidak_berisiko}<br>({persentase_tidak_berisiko:.1f}%)', 
+        #                   f'{berisiko}<br>({persentase_berisiko:.1f}%)'],
+        #             textposition='auto',
+        #             marker=dict(color=['#8AA624', '#FEA405'])
+        #         )
+        #     ])
+            
+        #     fig_bar.update_layout(
+        #         title="Perbandingan Risiko Stunting",
+        #         xaxis_title="Status",
+        #         yaxis_title="Jumlah Anak",
+        #         showlegend=False,
+        #         height=400
+        #     )
+            
+        #     st.plotly_chart(fig_bar, use_container_width=True)
+        
+        # st.markdown("---")
+        
+            if 'alamat' in df.columns:
+                # Hitung statistik per alamat
+                alamat_stats = df.groupby('alamat').agg(
+                    total_anak=('id', 'count'),
+                    berisiko_stunting=('status_stunting', lambda x: (x != 'Tidak Berisiko Stunting').sum())
+                ).reset_index()
+
+                alamat_stats['persentase'] = (
+                    alamat_stats['berisiko_stunting'] / alamat_stats['total_anak'] * 100
+                ).round(1)
+
+                # Bar Chart
+                fig_bar = go.Figure(data=[
+                    go.Bar(
+                        x=alamat_stats['alamat'],
+                        y=alamat_stats['berisiko_stunting'],
+                        text=alamat_stats['persentase'].astype(str) + '%',
+                        textposition='auto',
+                        marker=dict(color='#FEA405')
+                    )
+                ])
+
+                fig_bar.update_layout(
+                    title="Perbandingan Risiko Stunting per Dukuh",
+                    xaxis_title="Alamat",
+                    yaxis_title="Jumlah Anak Berisiko Stunting",
+                    height=400
                 )
-            ])
-            
-            fig_bar.update_layout(
-                title="Perbandingan Risiko Stunting",
-                xaxis_title="Status",
-                yaxis_title="Jumlah Anak",
-                showlegend=False,
-                height=400
-            )
-            
-            st.plotly_chart(fig_bar, use_container_width=True)
-        
-        st.markdown("---")
-        
+
+                st.plotly_chart(fig_bar, use_container_width=True)
+            else:
+                st.info("Kolom 'alamat' tidak ditemukan dalam data.")
+                
         # Statistik per Daerah
         st.subheader(" Statistik Risiko Stunting per Daerah")
         if 'alamat' in df.columns:
@@ -788,7 +822,8 @@ if page == " Database (Admin)" and st.session_state.view_mode == 'admin' and st.
                     with col1:
                         edit_date = st.date_input("Tanggal Pengukuran", value=pd.to_datetime(record[1]).date())
                         edit_name = st.text_input("Nama Anak", value=record[2])
-                        edit_alamat = st.text_input("Alamat/Desa", value=record[5])
+                        # edit_alamat = st.text_input("Alamat/Desa", value=record[5])
+                        edit_alamat = st.selectbox("Alamat Dukuh", ["Karangasem", "Bentak", "Gonggangan", "Sukolelo", "Pijinan"])
                         edit_age = st.number_input("Usia (bulan)", min_value=0, max_value=60, value=record[3])
                         edit_sex = st.selectbox("Jenis Kelamin", ["L", "P"], 
                                               index=0 if record[4] == "L" else 1,
@@ -963,7 +998,8 @@ elif page == " Skrining Balita":
         st.subheader(" Data Balita")
         date = st.date_input("Tanggal Pengukuran", value=None)
         name = st.text_input("Nama Anak", placeholder="Masukkan nama lengkap anak")
-        alamat = st.text_input("Alamat/Desa", placeholder="Contoh: Desa Slogo, Kec. Tanon")
+        # alamat = st.text_input("Alamat/Desa", placeholder="Contoh: Desa Slogo, Kec. Tanon")
+        alamat = st.selectbox("Alamat Dukuh", ["Karangasem", "Bentak", "Gonggangan", "Sukolelo", "Pijinan"])
         
         birth_date = st.date_input("Tanggal Lahir Anak", value=None)
         
@@ -1144,16 +1180,16 @@ elif page == " Profile":
                 padding: 2rem; border-radius: 15px; border-left: 5px solid #8AA624;'>
         <p style='font-size: 1.1rem; line-height: 1.8; text-align: justify;'>
             <strong>SI Tumbuh</strong> merupakan sistem informasi berbasis web yang dikembangkan untuk mendukung skrining 
-            pertumbuhan balita dan penilaian status gizi anak di tingkat layanan kesehatan dasar. Sistem ini menggunakan 
+            pertumbuhan dan penilaian status gizi balita di tingkat layanan posyandu. Sistem ini menggunakan 
             data antropometri balita meliputi berat badan, tinggi/panjang badan, usia, dan jenis kelamin untuk menghitung 
             indikator pertumbuhan (BB/U, TB/U, BB/TB, dan LK/U) berdasarkan standar WHO, sehingga dapat mengidentifikasi 
-            gangguan pertumbuhan dan risiko stunting secara dini.
+            gangguan pertumbuhan dan risiko stunting.
         </p>
         <p style='font-size: 1.1rem; line-height: 1.8; text-align: justify;'>
-            Sebagai alat bantu skrining, SI Tumbuh menyajikan hasil pengukuran dalam bentuk visualisasi yang mudah dipahami, 
-            disertai interpretasi status gizi dan rekomendasi tindak lanjut awal yang ditujukan untuk mendukung peran kader 
-            Posyandu dan tenaga kesehatan. Sistem ini dirancang untuk memperkuat pemantauan pertumbuhan balita, deteksi dini 
-            masalah gizi, serta upaya promotif dan preventif dalam peningkatan kesehatan dan gizi anak.
+            SI Tumbuh menyajikan hasil pengukuran dalam bentuk visualisasi yang mudah dipahami, disertai interpretasi
+            status gizi dan rekomendasi tindak lanjut awal yang ditujukan untuk mendukung peran kader Posyandu. 
+            Sistem ini dirancang untuk memperkuat pemantauan pertumbuhan balita, deteksi dini masalah gizi, serta upaya
+            promotif dan preventif dalam peningkatan kesehatan dan status gizi balita.
         </p>
     </div>
     """, unsafe_allow_html=True)
