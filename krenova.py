@@ -15,6 +15,8 @@ except Exception as e:
     client = None
 
 ### ======= FUNGSI ANALISIS AI
+def load_prompt(path='prompt.txt'):
+    pass
 def get_ai_analysis(data_anak, status_z):
     prompt = f"""
     Anda adalah Pakar Gizi Anak (Pediatrician) Berstandar WHO. Berikan analisis mendalam berdasarkan data:
