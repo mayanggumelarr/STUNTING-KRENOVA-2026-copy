@@ -333,7 +333,7 @@ def safe_round(x):
     return round(x, 2) if x is not None else None
 
 ## ======= RISK STUNTING (%)
-def stunting_risk_percent(hfa):
+def stunting_risk(hfa):
     # score = 0
 
     # if hfa < -2:
@@ -840,7 +840,7 @@ if page == " Database (Admin)" and st.session_state.view_mode == 'admin' and st.
                         hcz_z = calc_hcfa(edit_data["age"], edit_data["sex"], edit_data["hc"])
                         hcz_label = hcaf_status(hcz_z)
                         
-                        risk = stunting_risk_percent(haz_z) if haz_z else None
+                        risk = stunting_risk(safe_round(haz_z)) if haz_z else None
                         status = stunting_status(haz_z) if haz_z else None
                         
                         WFA = safe_round(waz_z)
@@ -1042,7 +1042,7 @@ elif page == " Skrining Balita":
             hcz_z = calc_hcfa(data["age"], data["sex"], data["hc"])
             hcz_label = hcaf_status(hcz_z)
 
-            risk = stunting_risk_percent(haz_z) if haz_z else None
+            risk = stunting_risk(safe_round(haz_z)) if haz_z else None
             status = stunting_status(haz_z) if haz_z else None
 
             WFA = safe_round(waz_z)
