@@ -1111,33 +1111,33 @@ elif page == " Skrining Balita":
             
             st.markdown("---")
             
-            # # Interpretasi Stunting
-            # st.subheader(" Interpretasi Risiko Stunting")
-            
-            # col1, col2 = st.columns([1, 2])
-            # with col1:
-            #     st.markdown(f"""
-            #     <div style='text-align: center; padding: 2rem; background: linear-gradient(135deg, #8AA624 0%, #FEA405 100%); border-radius: 15px; color: white;'>
-            #         <h1 style='margin: 0; font-size: 3rem;'>{risk}</h1>
-            #         <p style='margin: 0; font-size: 1.2rem;'>Berdasarkan Z-Score Tinggi Badan</p>
-            #     </div>
-            #     """, unsafe_allow_html=True)
-            
-            # with col2:
-            #     if status != "Tidak Berisiko Stunting":
-            #         st.error(f" **Status Stunting:** {status}")
-            #     else:
-            #         st.success(f" **Status Stunting:** {status}")
-
             # Interpretasi Stunting
-            st.subheader("Interpretasi Risiko Stunting")
-
-            st.markdown(f"""
+            st.subheader(" Interpretasi Risiko Stunting")
+            
+            col1, col2 = st.columns([1, 2])
+            with col1:
+                st.markdown(f"""
                 <div style='text-align: center; padding: 2rem; background: linear-gradient(135deg, #8AA624 0%, #FEA405 100%); border-radius: 15px; color: white;'>
                     <p style='margin: 0; font-size: 1.2rem;'>Z-Score Tinggi Badan</p>
                     <h1 style='margin: 0; font-size: 3rem;'>{risk}</h1>
                 </div>
                 """, unsafe_allow_html=True)
+            
+            with col2:
+                if status != "Tidak Berisiko Stunting":
+                    st.error(f" **Status Stunting:** {status}")
+                else:
+                    st.success(f" **Status Stunting:** {status}")
+
+            # # Interpretasi Stunting
+            # st.subheader("Interpretasi Risiko Stunting")
+
+            # st.markdown(f"""
+            #     <div style='text-align: center; padding: 2rem; background: linear-gradient(135deg, #8AA624 0%, #FEA405 100%); border-radius: 15px; color: white;'>
+            #         <p style='margin: 0; font-size: 1.2rem;'>Z-Score Tinggi Badan</p>
+            #         <h1 style='margin: 0; font-size: 3rem;'>{risk}</h1>
+            #     </div>
+            #     """, unsafe_allow_html=True)
             
             st.markdown("---")
             st.caption(" Hasil ini merupakan skrining awal. Untuk diagnosis dan penanganan lebih lanjut, konsultasikan dengan tenaga kesehatan profesional.")
