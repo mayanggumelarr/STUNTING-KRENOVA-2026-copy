@@ -333,14 +333,15 @@ def safe_round(x):
     return round(x, 2) if x is not None else None
 
 ## ======= RISK STUNTING (%)
-def stunting_risk_percent(hfa, wfa):
-    score = 0
+def stunting_risk_percent(hfa):
+    # score = 0
 
-    if hfa < -2:
-        score += 60
-    if wfa < -2:
-        score += 40
-    return min(score, 100)
+    # if hfa < -2:
+    #     score += 60
+    # if wfa < -2:
+    #     score += 40
+    # return min(score, 100)
+    return hfa
 
 
 ## ========= STREAMLIT
