@@ -39,7 +39,7 @@ def get_ai_analysis(data_anak, status_z):
     
     try:
         response = client.models.generate_content(
-            model="gemini-3-flash-preview",
+            model="gemini-2.5-flash",
             contents=prompt
         )
         return response.text
@@ -238,8 +238,9 @@ def calc_hfa(age, sex, height):
 ## BB Terhadap Panjang/Tinggi Badan
 def calc_wfh(age, sex, weight, body_cm):
     # Tentukan tipe pengukuran berdasarkan usia
-    m_type = "Length" if age < 24 == "Height" else "Height"
-
+    # m_type = "Length" if age < 24 == "Height" else "Height"
+    m_type = "Length" if age < 24 else "Height"
+    
     rounded_height = round(body_cm * 2) / 2  # Pembulatan ke 0.5 terdekat
 
     # Filter data WHO sesuai kolom dataset kamu
