@@ -1073,7 +1073,7 @@ elif page == " Skrining Balita":
             hcz_z = calc_hcfa(data["age"], data["sex"], data["hc"])
             hcz_label = hcaf_status(hcz_z)
 
-            risk = stunting_risk_percent(haz_z, waz_z) if haz_z and waz_z else None
+            risk = stunting_risk_percent(haz_z) if haz_z else None
             status = stunting_status(haz_z) if haz_z else None
 
             WFA = safe_round(waz_z)
