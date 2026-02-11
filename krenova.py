@@ -315,7 +315,7 @@ def wfh_status(z):
     elif z > 2:
         return "Anak Overweight\n(Z-Score normal -2 s/d +2)"
     else:
-        return "Gizi Anak Baik/Normal\n(Z-Score normal -2 s/d +2)"
+        return "Gizi Anak Baik/Normal\n(Z-Score normal -2 s/d +2) "
 
 ### Lingkar Kepala/Usia
 def hcaf_status(z):
