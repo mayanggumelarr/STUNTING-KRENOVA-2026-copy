@@ -1119,7 +1119,7 @@ elif page == " Skrining Balita":
                 st.markdown(f"""
                 <div style='text-align: center; padding: 2rem; background: linear-gradient(135deg, #8AA624 0%, #FEA405 100%); border-radius: 15px; color: white;'>
                     <h1 style='margin: 0; font-size: 3rem;'>{risk}</h1>
-                    <p style='margin: 0; font-size: 1.2rem;'>Risiko Stunting</p>
+                    <p style='margin: 0; font-size: 1.2rem;'>Berdasarkan Z-Score Tinggi Badan</p>
                 </div>
                 """, unsafe_allow_html=True)
             
