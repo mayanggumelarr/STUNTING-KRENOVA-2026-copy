@@ -693,37 +693,6 @@ if page == " Database (Admin)" and st.session_state.view_mode == 'admin' and st.
             st.plotly_chart(fig_pie, use_container_width=True)
         
         with col2:
-            # Bar Chart - Perbandingan
-        #     total_anak = len(df)
-        #     berisiko = len(df[df['status_stunting'] != 'Tidak Berisiko Stunting'])
-        #     tidak_berisiko = total_anak - berisiko
-            
-        #     persentase_berisiko = (berisiko / total_anak * 100) if total_anak > 0 else 0
-        #     persentase_tidak_berisiko = (tidak_berisiko / total_anak * 100) if total_anak > 0 else 0
-            
-        #     fig_bar = go.Figure(data=[
-        #         go.Bar(
-        #             x=['Tidak Berisiko', 'Berisiko Stunting'],
-        #             y=[tidak_berisiko, berisiko],
-        #             text=[f'{tidak_berisiko}<br>({persentase_tidak_berisiko:.1f}%)', 
-        #                   f'{berisiko}<br>({persentase_berisiko:.1f}%)'],
-        #             textposition='auto',
-        #             marker=dict(color=['#8AA624', '#FEA405'])
-        #         )
-        #     ])
-            
-        #     fig_bar.update_layout(
-        #         title="Perbandingan Risiko Stunting",
-        #         xaxis_title="Status",
-        #         yaxis_title="Jumlah Anak",
-        #         showlegend=False,
-        #         height=400
-        #     )
-            
-        #     st.plotly_chart(fig_bar, use_container_width=True)
-        
-        # st.markdown("---")
-        
             if 'alamat' in df.columns:
                 # Hitung statistik per alamat
                 alamat_stats = df.groupby('alamat').agg(
@@ -871,7 +840,7 @@ if page == " Database (Admin)" and st.session_state.view_mode == 'admin' and st.
                         hcz_z = calc_hcfa(edit_data["age"], edit_data["sex"], edit_data["hc"])
                         hcz_label = hcaf_status(hcz_z)
                         
-                        risk = stunting_risk_percent(haz_z, waz_z) if haz_z and waz_z else None
+                        risk = stunting_risk_percent(haz_z) if haz_z else None
                         status = stunting_status(haz_z) if haz_z else None
                         
                         WFA = safe_round(waz_z)
