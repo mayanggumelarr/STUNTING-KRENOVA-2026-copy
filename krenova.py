@@ -1111,23 +1111,42 @@ elif page == " Skrining Balita":
             
             st.markdown("---")
             
-            # Interpretasi Stunting
+            # # Interpretasi Stunting
+            # st.subheader(" Interpretasi Risiko Stunting")
+            
+            # col1, col2 = st.columns([1, 2])
+            # with col1:
+            #     st.markdown(f"""
+            #     <div style='text-align: center; padding: 2rem; background: linear-gradient(135deg, #8AA624 0%, #FEA405 100%); border-radius: 15px; color: white;'>
+            #         <h1 style='margin: 0; font-size: 3rem;'>{risk}</h1>
+            #         <p style='margin: 0; font-size: 1.2rem;'>Berdasarkan Z-Score Tinggi Badan</p>
+            #     </div>
+            #     """, unsafe_allow_html=True)
+            
+            # with col2:
+            #     if status != "Tidak Berisiko Stunting":
+            #         st.error(f" **Status Stunting:** {status}")
+            #     else:
+            #         st.success(f" **Status Stunting:** {status}")
+
+                        # Interpretasi Stunting
+
             st.subheader(" Interpretasi Risiko Stunting")
             
-            col1, col2 = st.columns([1, 2])
+            col1 = st.columns([1, 1])
             with col1:
                 st.markdown(f"""
                 <div style='text-align: center; padding: 2rem; background: linear-gradient(135deg, #8AA624 0%, #FEA405 100%); border-radius: 15px; color: white;'>
-                    <h1 style='margin: 0; font-size: 3rem;'>{risk}</h1>
+                    <h1 style='margin: 0; font-size: 3rem;'>{status}</h1>
                     <p style='margin: 0; font-size: 1.2rem;'>Berdasarkan Z-Score Tinggi Badan</p>
                 </div>
                 """, unsafe_allow_html=True)
             
-            with col2:
-                if status != "Tidak Berisiko Stunting":
-                    st.error(f" **Status Stunting:** {status}")
-                else:
-                    st.success(f" **Status Stunting:** {status}")
+            # with col2:
+            #     if status != "Tidak Berisiko Stunting":
+            #         st.error(f" **Status Stunting:** {status}")
+            #     else:
+            #         st.success(f" **Status Stunting:** {status}")
             
             st.markdown("---")
             st.caption(" Hasil ini merupakan skrining awal. Untuk diagnosis dan penanganan lebih lanjut, konsultasikan dengan tenaga kesehatan profesional.")
