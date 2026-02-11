@@ -238,9 +238,8 @@ def calc_hfa(age, sex, height):
 ## BB Terhadap Panjang/Tinggi Badan
 def calc_wfh(age, sex, weight, body_cm):
     # Tentukan tipe pengukuran berdasarkan usia
-    # m_type = "Length" if age < 24 == "Height" else "Height"
     m_type = "Length" if age < 24 else "Height"
-    
+
     rounded_height = round(body_cm * 2) / 2  # Pembulatan ke 0.5 terdekat
 
     # Filter data WHO sesuai kolom dataset kamu
@@ -306,7 +305,7 @@ def hfa_status(z):
 ### Berat/Tinggi
 def wfh_status(z):
     if z is None:
-        return None
+        return "Tinggi Badan atau Berat Badan Di Luar Rentang Database"
     elif z < -3:
         return "Gizi Anak Buruk\n(Z-Score normal -2 s/d +2)"
     elif z < -2:
