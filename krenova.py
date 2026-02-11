@@ -159,7 +159,7 @@ def update_measurement(record_id, data, z_scores, statuses, risk, status_stuntin
                data['weight'], data['height'], data['hc'],
                z_scores['wfa'], statuses['wfa'], z_scores['hfa'], statuses['hfa'],
                z_scores['wfh'], statuses['wfh'], z_scores['hcfa'], statuses['hcfa'],
-               risk, status_stunting, data['birth_date'], record_id))
+               risk, status_stunting, data.get('birth_date'), record_id))
 
     conn.commit()
     conn.close()
